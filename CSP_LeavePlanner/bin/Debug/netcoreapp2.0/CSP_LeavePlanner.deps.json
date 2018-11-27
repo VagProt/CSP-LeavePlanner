@@ -1,0 +1,486 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.0",
+    "signature": "0ed76daba9f655f4c0bb59c0cfa40b206d10a2f2"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.0": {
+      "CSP_LeavePlanner/1.0.0": {
+        "dependencies": {
+          "Google.OrTools": "6.9.5841"
+        },
+        "runtime": {
+          "CSP_LeavePlanner.dll": {}
+        }
+      },
+      "Google.OrTools/6.9.5841": {
+        "dependencies": {
+          "Google.OrTools.runtime.linux-x64": "6.9.5841",
+          "Google.OrTools.runtime.osx-x64": "6.9.5841",
+          "Google.OrTools.runtime.win-x64": "6.9.5841"
+        }
+      },
+      "Google.OrTools.runtime.linux-x64/6.9.5841": {
+        "dependencies": {
+          "Google.Protobuf": "3.6.1"
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/lib/netstandard2.0/Google.OrTools.dll": {
+            "rid": "linux-x64",
+            "assetType": "runtime"
+          },
+          "runtimes/linux-x64/native/Google.OrTools.runtime.linux-x64.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCbc.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCbc.so.3": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCbc.so.3.9.9": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCbcSolver.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCbcSolver.so.3": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCbcSolver.so.3.9.9": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCgl.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCgl.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCgl.so.1.9.10": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libClp.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libClp.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libClp.so.1.13.11": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libClpSolver.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libClpSolver.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libClpSolver.so.1.13.11": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCoinUtils.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCoinUtils.so.3": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libCoinUtils.so.3.10.14": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsi.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsi.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsi.so.1.12.9": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiCbc.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiCbc.so.3": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiCbc.so.3.9.9": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiClp.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiClp.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiClp.so.1.13.11": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiCommonTests.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiCommonTests.so.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libOsiCommonTests.so.1.12.9": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libgflags.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libgflags.so.2.2": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libgflags.so.2.2.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libgflags_nothreads.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libgflags_nothreads.so.2.2": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libgflags_nothreads.so.2.2.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libglog.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libglog.so.0": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libglog.so.0.3.5": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libortools.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libprotobuf-lite.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libprotobuf-lite.so.3.6.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libprotobuf.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libprotobuf.so.3.6.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libprotoc.so": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          },
+          "runtimes/linux-x64/native/libprotoc.so.3.6.1": {
+            "rid": "linux-x64",
+            "assetType": "native"
+          }
+        }
+      },
+      "Google.OrTools.runtime.osx-x64/6.9.5841": {
+        "dependencies": {
+          "Google.Protobuf": "3.6.1"
+        },
+        "runtimeTargets": {
+          "runtimes/osx-x64/lib/netstandard2.0/Google.OrTools.dll": {
+            "rid": "osx-x64",
+            "assetType": "runtime"
+          },
+          "runtimes/osx-x64/native/Google.OrTools.runtime.osx-x64.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCbc.3.9.9.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCbc.3.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCbc.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCbcSolver.3.9.9.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCbcSolver.3.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCbcSolver.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCgl.1.9.10.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCgl.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCgl.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libClp.1.13.11.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libClp.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libClp.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libClpSolver.1.13.11.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libClpSolver.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libClpSolver.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCoinUtils.3.10.14.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCoinUtils.3.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libCoinUtils.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsi.1.12.9.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsi.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsi.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiCbc.3.9.9.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiCbc.3.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiCbc.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiClp.1.13.11.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiClp.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiClp.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiCommonTests.1.12.9.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiCommonTests.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libOsiCommonTests.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libgflags.2.2.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libgflags.2.2.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libgflags.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libgflags_nothreads.2.2.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libgflags_nothreads.2.2.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libgflags_nothreads.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libglog.0.3.5.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libglog.0.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libglog.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libortools.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libprotobuf-lite.3.6.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libprotobuf-lite.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libprotobuf.3.6.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libprotobuf.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libprotoc.3.6.1.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          },
+          "runtimes/osx-x64/native/libprotoc.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native"
+          }
+        }
+      },
+      "Google.OrTools.runtime.win-x64/6.9.5841": {
+        "dependencies": {
+          "Google.Protobuf": "3.6.1"
+        },
+        "runtimeTargets": {
+          "runtimes/win-x64/lib/netstandard2.0/Google.OrTools.dll": {
+            "rid": "win-x64",
+            "assetType": "runtime"
+          },
+          "runtimes/win-x64/native/Google.OrTools.runtime.win-x64.dll": {
+            "rid": "win-x64",
+            "assetType": "native"
+          }
+        }
+      },
+      "Google.Protobuf/3.6.1": {
+        "runtime": {
+          "lib/netstandard1.0/Google.Protobuf.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CSP_LeavePlanner/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Google.OrTools/6.9.5841": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3BQGmsCi0mJzsJrZkpPURaCOfLinHO+Cc4pNhmkEsfjfwAvTlF06pI+XqoPtsFm5pJE8vGMRcWwrKZTJ01zJsA==",
+      "path": "google.ortools/6.9.5841",
+      "hashPath": "google.ortools.6.9.5841.nupkg.sha512"
+    },
+    "Google.OrTools.runtime.linux-x64/6.9.5841": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eH0ToCIMig12GyjR5xT+9hDXR+9UPGdwlXiz5KAr4P4tcwxvLsKVZdqOdQcb3LhkTrRswwt/GtcfFGYko1pZLw==",
+      "path": "google.ortools.runtime.linux-x64/6.9.5841",
+      "hashPath": "google.ortools.runtime.linux-x64.6.9.5841.nupkg.sha512"
+    },
+    "Google.OrTools.runtime.osx-x64/6.9.5841": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ug1pWv1gaOOwN8SsbrZrB8S6WPxMc5teWibXip0Tpt80hSIFXhJThWePhnb1ToNbg3CG7heSbYk7JOXf9Ukz4A==",
+      "path": "google.ortools.runtime.osx-x64/6.9.5841",
+      "hashPath": "google.ortools.runtime.osx-x64.6.9.5841.nupkg.sha512"
+    },
+    "Google.OrTools.runtime.win-x64/6.9.5841": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ssydmX5NtSXWPW8eGEDk84okCKoP0fAQ1SS/oOSjhIhEozaF4QddLW2K5U0F75fIZbBd/UqPElpawUviPnaFEQ==",
+      "path": "google.ortools.runtime.win-x64/6.9.5841",
+      "hashPath": "google.ortools.runtime.win-x64.6.9.5841.nupkg.sha512"
+    },
+    "Google.Protobuf/3.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D/h9IZl76jjfM5VlPzG235Zdys9RKXNLYbRGm2fa6Y2UshTqAvYBPIydNOvNTEa24DER/m/zvelHlLO9n1GtNQ==",
+      "path": "google.protobuf/3.6.1",
+      "hashPath": "google.protobuf.3.6.1.nupkg.sha512"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\bin\Debug\netcoreapp2.0\CSP_LeavePlanner.deps.json
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\bin\Debug\netcoreapp2.0\CSP_LeavePlanner.runtimeconfig.json
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\bin\Debug\netcoreapp2.0\CSP_LeavePlanner.runtimeconfig.dev.json
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\bin\Debug\netcoreapp2.0\CSP_LeavePlanner.dll
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\obj\Debug\netcoreapp2.0\CSP_LeavePlanner.csprojAssemblyReference.cache
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\obj\Debug\netcoreapp2.0\CSP_LeavePlanner.csproj.CoreCompileInputs.cache
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\obj\Debug\netcoreapp2.0\CSP_LeavePlanner.AssemblyInfoInputs.cache
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\obj\Debug\netcoreapp2.0\CSP_LeavePlanner.AssemblyInfo.cs
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\bin\Debug\netcoreapp2.0\CSP_LeavePlanner.pdb
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\obj\Debug\netcoreapp2.0\CSP_LeavePlanner.dll
+C:\Users\vpro\source\repos\CSP_LeavePlanner\CSP_LeavePlanner\obj\Debug\netcoreapp2.0\CSP_LeavePlanner.pdb
