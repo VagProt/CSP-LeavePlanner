@@ -199,7 +199,7 @@ namespace CSP_LeavePlanner
                     int i = 0;
                     foreach (var val in Variables[e.Id]) //updates Season with the results of the solver
                     {
-                        if (i++ == 0 && e.InitialChoice != null)
+                        if (i++ == 0 && e.SetDates.Any())
                         {
                             AllLeaves.ElementAt((int)solver.Value(val)).availability--;
                             e.NumDesiredDates--;
