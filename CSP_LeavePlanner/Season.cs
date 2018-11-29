@@ -32,7 +32,7 @@ namespace CSP_LeavePlanner
             if (Employees.Exists(e => e.Id == emp.Id) == false)
                 Employees.Add(emp);
             else
-                throw new System.ArgumentException("Employee already exists", "emp");
+                throw new ArgumentException("Employee already exists", "emp");
         }
 
         public void AddLeave(AvailableDate date) //Add Leave date to Season object
@@ -83,6 +83,8 @@ namespace CSP_LeavePlanner
             ConflictAll = AvailableDate.CreateRelationTable(AllLeaves, ConflictPeriod);
             Conflict5day = AvailableDate.CreateRelationTable(Leaves[true], ConflictPeriod);
             Conflict10day = AvailableDate.CreateRelationTable(Leaves[false], ConflictPeriod);
+
+            CalculateAndAdjustNeeds();
         }
 
         public void Solve()
@@ -109,7 +111,7 @@ namespace CSP_LeavePlanner
             List<int> AllUbs = new List<int>();
 
             Employees.ForEach(e => {
-                CalcLUBBasedOnLeaveMode(e, AllLeaves, AllLbs, AllUbs); //Calculates bounds of each employee's variables depending its type
+                CalcLUBBasedOnLeaveMode(e, AllLeaves, AllLbs, AllUbs); //Calculates bounds of each employee's variables depending on its type
 
                 List<IntVar> vars = new List<IntVar>();
                 for (int i = 0; i < e.NumDesiredDates; i++)
@@ -163,12 +165,7 @@ namespace CSP_LeavePlanner
                 //model.Add(vars[i-1] < vars[i]);
 
                 //Adds conflict constraints between the variables of each employee depending on type
-                if (e.LeaveType == Employee.LeaveMode.Days5)
-                    AddConflictConstraints(model, e, vars, Conflict5day, 0, counter);
-                else if (e.LeaveType == Employee.LeaveMode.Days10)
-                    AddConflictConstraints(model, e, vars, Conflict10day, Leaves[true].Count, counter);
-                else if (e.LeaveType == Employee.LeaveMode.Days10_5)
-                    AddConflictConstraints(model, e, vars, ConflictAll, 0, counter);
+                AddConflictConstraints(model, e, vars, counter);
 
                 //prev_vars = vars;
             });
@@ -225,15 +222,44 @@ namespace CSP_LeavePlanner
                 Leaves[false].ForEach(dat => dat.Print());
                 Console.WriteLine("--------------------------");
                 Console.WriteLine("---------------------------------------");
+
+                if (!PostSolveConflictCheck())
+                    Console.WriteLine("Solution has conflicts!");
             }
             else if (status == CpSolverStatus.Infeasible)
             {
-                Console.WriteLine("Model is Infeasible!");
+                Console.WriteLine("Model is infeasible!");
             }
         }
 
-        private void AddConflictConstraints(CpModel model, Employee e, IntVar[] vars, bool[,] ConflictArray, int offset, int counter)
+        private void AddConflictConstraints(CpModel model, Employee e, IntVar[] vars, int counter)
         {
+            bool[,] ConflictArray = null;
+            int offset = -1;
+
+            if (e.LeaveType == Employee.LeaveMode.Days5)
+                return;
+            else if (e.LeaveType == Employee.LeaveMode.Days10)
+                return;
+            else if (e.LeaveType == Employee.LeaveMode.Days10_5)
+            {
+                ConflictArray = ConflictAll;
+                offset = 0;
+            }
+            else if (e.LeaveType == Employee.LeaveMode.Days5_5)
+            {
+                ConflictArray = Conflict5day;
+                offset = 0;
+            }
+            else if (e.LeaveType == Employee.LeaveMode.Days5_5_5)
+            {
+                ConflictArray = Conflict5day;
+                offset = 0;
+            }
+
+            if (ConflictArray == null || offset == -1)
+                throw new ArgumentException("Mistyped Employee", "e");
+
             for (int i = 0; i < ConflictArray.GetLength(0); i++)
             {
                 for (int j = 0; j < ConflictArray.GetLength(1); j++)
@@ -260,12 +286,47 @@ namespace CSP_LeavePlanner
             }
         }
 
+        public bool PostSolveConflictCheck()
+        {
+            foreach (var emp in Employees)
+            {
+                bool[,] ConflictArray = null;
+                int offset = -1;
+
+                if (emp.LeaveType == Employee.LeaveMode.Days5)
+                    continue;
+                else if (emp.LeaveType == Employee.LeaveMode.Days10)
+                    continue;
+                else if (emp.LeaveType == Employee.LeaveMode.Days10_5)
+                {
+                    ConflictArray = ConflictAll;
+                    offset = 0;
+                }
+                else if (emp.LeaveType == Employee.LeaveMode.Days5_5 || emp.LeaveType == Employee.LeaveMode.Days5_5_5)
+                {
+                    ConflictArray = Conflict5day;
+                    offset = 0;
+                }
+
+                if (ConflictArray == null || offset == -1)
+                    throw new ArgumentException("Mistyped Employee", "e");
+
+                AvailableDate[] arr = emp.SetDates.ToArray();
+                for (int i = 0; i < arr.Length; i++)
+                    for (int j = i + 1; j < arr.Length; j++)
+                        if (ConflictArray[arr[i].Id - offset, arr[j].Id - offset])
+                            return false;
+            }
+
+            return true;
+        }
+
         private void CalcLUBBasedOnLeaveMode(Employee e, List<AvailableDate> allLeaves, List<int> allLbs, List<int> allUbs)
         {
             e.Lb = new int[e.NumDesiredDates];
             e.Ub = new int[e.NumDesiredDates];
 
-            if (e.LeaveType == Employee.LeaveMode.Days5)
+            if (e.LeaveType == Employee.LeaveMode.Days5 || e.LeaveType == Employee.LeaveMode.Days5_5 || e.LeaveType == Employee.LeaveMode.Days5_5_5)
             {
                 for (int i = 0; i < e.NumDesiredDates; i++)
                 {
@@ -300,6 +361,32 @@ namespace CSP_LeavePlanner
                     allUbs.Add(Leaves[true].Count - 1);
                 }
             }
+        }
+
+        private void CalculateAndAdjustNeeds()
+        {
+            int available5 = 0, needed5 = 0, available10 = 0, needed10 = 0;
+
+            Leaves[true].ForEach(l => available5 += l.availability);
+            Leaves[false].ForEach(l => available10 += l.availability);
+
+            foreach (var emp in Employees)
+            {
+                if (emp.LeaveType == Employee.LeaveMode.Days5 || emp.LeaveType == Employee.LeaveMode.Days5_5 || emp.LeaveType == Employee.LeaveMode.Days5_5_5)
+                    needed5 += emp.NumDesiredDates;
+                else if (emp.LeaveType == Employee.LeaveMode.Days10)
+                    needed10 += emp.NumDesiredDates;
+                else if (emp.LeaveType == Employee.LeaveMode.Days10_5)
+                {
+                    needed10 += 1;
+                    needed5 += emp.NumDesiredDates - 1;
+                }
+            }
+
+            if (available5 < needed5)
+                Leaves[true].Last().availability = needed5 - available5;
+            if (available10 < needed10)
+                Leaves[false].Last().availability = needed10 - available10;
         }
     }
 

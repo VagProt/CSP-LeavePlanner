@@ -73,7 +73,7 @@ class AvailableDate
     {
         bool flag = false;
 
-        if (date.name == "FAKE" || this.name == "FAKE")
+        if (date.name == "5daynil" || this.name == "5daynil" || date.name == "10daynil" || this.name == "10daynil")
             return flag;
 
         TimeSpan diff1 = this.start - date.end;

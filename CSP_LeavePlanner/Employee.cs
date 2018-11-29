@@ -11,7 +11,9 @@ class Employee
     {
         Days5,
         Days10,
-        Days10_5
+        Days10_5,
+        Days5_5,
+        Days5_5_5
     }
 
     public int Id;
@@ -26,12 +28,14 @@ class Employee
     public Employee(int id, List<AvailableDate> SetDates, int NumDesiredDates, LeaveMode LeaveType, String choice = null)
     {
         this.Id = id;
-        this.NumDesiredDates = NumDesiredDates;
+        //this.NumDesiredDates = NumDesiredDates;
         this.SetDates = SetDates;
         this.InitialChoice = choice;
         this.LeaveType = LeaveType;
         this.Lb = null;
         this.Ub = null;
+
+        this.NumDesiredDates = NumberOfDatesToAllocate();
     }
 
     public Employee(Employee e)
@@ -81,7 +85,7 @@ class Employee
     {
         bool isFiveDays = (date.end - date.start).Days == 4;
 
-        if (((LeaveType == LeaveMode.Days5 && isFiveDays) ||
+        if ((((LeaveType == LeaveMode.Days5 || LeaveType == LeaveMode.Days5_5 || LeaveType == LeaveMode.Days5_5_5) && isFiveDays) ||
             (LeaveType == LeaveMode.Days10 && !isFiveDays) ||
             (LeaveType == LeaveMode.Days10_5))
             && date.availability > 0)
@@ -100,7 +104,7 @@ class Employee
     public bool TryAddChoice(Dictionary<bool, List<AvailableDate>> dates)//Adds initial choice of each employee before solving
     {
         AvailableDate date = null;
-        if (InitialChoice != null && LeaveType == LeaveMode.Days5)
+        if (InitialChoice != null && (LeaveType == LeaveMode.Days5 || LeaveType == LeaveMode.Days5_5 || LeaveType == LeaveMode.Days5_5_5))
             date = AvailableDate.GetDateByName(dates[true], InitialChoice);
         else if (InitialChoice != null && LeaveType == LeaveMode.Days10)
             date = AvailableDate.GetDateByName(dates[false], InitialChoice);
@@ -117,6 +121,24 @@ class Employee
         }
 
         return false;
+    }
+
+    public int NumberOfDatesToAllocate()
+    {
+        int ret = -1;
+
+        if (LeaveType == LeaveMode.Days5)
+            ret = 1;
+        else if (LeaveType == LeaveMode.Days10)
+            ret = 1;
+        else if (LeaveType == LeaveMode.Days10_5)
+            ret = 2;
+        else if (LeaveType == LeaveMode.Days5_5)
+            ret = 2;
+        else if (LeaveType == LeaveMode.Days5_5_5)
+            ret = 3;
+
+        return ret;
     }
 
     public void Print()
