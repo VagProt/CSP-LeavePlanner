@@ -9,61 +9,61 @@ namespace CSP_LeavePlanner
         {
             List<AvailableDate> data = new List<AvailableDate>
             {
-                new AvailableDate(0, "JAN0A", new DateTime(2019, 1, 1), new DateTime(2019, 1, 5), 5),
-                new AvailableDate(1, "JAN0B", new DateTime(2019, 1, 6), new DateTime(2019, 1, 10), 5),
-                new AvailableDate(2, "JAN1A", new DateTime(2019, 1, 11), new DateTime(2019, 1, 15), 5),
-                new AvailableDate(3, "JAN1B", new DateTime(2019, 1, 16), new DateTime(2019, 1, 20), 5),
-                new AvailableDate(4, "JAN2A", new DateTime(2019, 1, 21), new DateTime(2019, 1, 25), 5),
-                new AvailableDate(5, "JAN2B", new DateTime(2019, 1, 26), new DateTime(2019, 1, 30), 5),
+                new AvailableDate(0, "JAN0A", new DateTime(2019, 1, 1), new DateTime(2019, 1, 5), 20),
+                new AvailableDate(1, "JAN0B", new DateTime(2019, 1, 6), new DateTime(2019, 1, 10), 20),
+                new AvailableDate(2, "JAN1A", new DateTime(2019, 1, 11), new DateTime(2019, 1, 15), 20),
+                new AvailableDate(3, "JAN1B", new DateTime(2019, 1, 16), new DateTime(2019, 1, 20), 20),
+                new AvailableDate(4, "JAN2A", new DateTime(2019, 1, 21), new DateTime(2019, 1, 25), 20),
+                new AvailableDate(5, "JAN2B", new DateTime(2019, 1, 26), new DateTime(2019, 1, 30), 20),
 				//FEB
-                new AvailableDate(6, "FEB0A", new DateTime(2019, 2, 1), new DateTime(2019, 2, 5), 5),
-                new AvailableDate(7, "FEB0B", new DateTime(2019, 2, 6), new DateTime(2019, 2, 10), 5),
-                new AvailableDate(8, "FEB1A", new DateTime(2019, 2, 11), new DateTime(2019, 2, 15), 5),
-                new AvailableDate(9, "FEB1B", new DateTime(2019, 2, 16), new DateTime(2019, 2, 20), 5),
-                new AvailableDate(10, "FEB2A", new DateTime(2019, 2, 21), new DateTime(2019, 2, 25), 5),
+                new AvailableDate(6, "FEB0A", new DateTime(2019, 2, 1), new DateTime(2019, 2, 5), 0),
+                new AvailableDate(7, "FEB0B", new DateTime(2019, 2, 6), new DateTime(2019, 2, 10), 0),
+                new AvailableDate(8, "FEB1A", new DateTime(2019, 2, 11), new DateTime(2019, 2, 15), 0),
+                new AvailableDate(9, "FEB1B", new DateTime(2019, 2, 16), new DateTime(2019, 2, 20), 0),
+                new AvailableDate(10, "FEB2A", new DateTime(2019, 2, 21), new DateTime(2019, 2, 25), 0),
                 //MAR
-                new AvailableDate(11, "MAR0A", new DateTime(2019, 3, 1), new DateTime(2019, 3, 5), 5),
-                new AvailableDate(12, "MAR0B", new DateTime(2019, 3, 6), new DateTime(2019, 3, 10), 5),
-                new AvailableDate(13, "MAR1A", new DateTime(2019, 3, 11), new DateTime(2019, 3, 15), 5),
-                new AvailableDate(14, "MAR1B", new DateTime(2019, 3, 16), new DateTime(2019, 3, 20), 5),
-                new AvailableDate(15, "MAR2A", new DateTime(2019, 3, 21), new DateTime(2019, 3, 25), 5),
-                new AvailableDate(16, "MAR2B", new DateTime(2019, 3, 26), new DateTime(2019, 3, 30), 5),
+                new AvailableDate(11, "MAR0A", new DateTime(2019, 3, 1), new DateTime(2019, 3, 5), 0),
+                new AvailableDate(12, "MAR0B", new DateTime(2019, 3, 6), new DateTime(2019, 3, 10), 0),
+                new AvailableDate(13, "MAR1A", new DateTime(2019, 3, 11), new DateTime(2019, 3, 15), 0),
+                new AvailableDate(14, "MAR1B", new DateTime(2019, 3, 16), new DateTime(2019, 3, 20), 0),
+                new AvailableDate(15, "MAR2A", new DateTime(2019, 3, 21), new DateTime(2019, 3, 25), 0),
+                new AvailableDate(16, "MAR2B", new DateTime(2019, 3, 26), new DateTime(2019, 3, 30), 0),
                 //APR
-                new AvailableDate(17, "APR0A", new DateTime(2019, 4, 1), new DateTime(2019, 4, 5), 5),
-                new AvailableDate(18, "APR0B", new DateTime(2019, 4, 6), new DateTime(2019, 4, 10), 5),
-                new AvailableDate(19, "APR1A", new DateTime(2019, 4, 11), new DateTime(2019, 4, 15), 5),
-                new AvailableDate(20, "APR1B", new DateTime(2019, 4, 16), new DateTime(2019, 4, 20), 5),
-                new AvailableDate(21, "APR2A", new DateTime(2019, 4, 21), new DateTime(2019, 4, 25), 5),
-                new AvailableDate(22, "APR2B", new DateTime(2019, 4, 26), new DateTime(2019, 4, 30), 5),
+                new AvailableDate(17, "APR0A", new DateTime(2019, 4, 1), new DateTime(2019, 4, 5), 0),
+                new AvailableDate(18, "APR0B", new DateTime(2019, 4, 6), new DateTime(2019, 4, 10), 0),
+                new AvailableDate(19, "APR1A", new DateTime(2019, 4, 11), new DateTime(2019, 4, 15), 0),
+                new AvailableDate(20, "APR1B", new DateTime(2019, 4, 16), new DateTime(2019, 4, 20), 0),
+                new AvailableDate(21, "APR2A", new DateTime(2019, 4, 21), new DateTime(2019, 4, 25), 0),
+                new AvailableDate(22, "APR2B", new DateTime(2019, 4, 26), new DateTime(2019, 4, 30), 0),
                 //MAY
-                new AvailableDate(23, "MAY0A", new DateTime(2019, 5, 1), new DateTime(2019, 5, 5), 5),
-                new AvailableDate(24, "MAY0B", new DateTime(2019, 5, 6), new DateTime(2019, 5, 10), 5),
-                new AvailableDate(25, "MAY1A", new DateTime(2019, 5, 11), new DateTime(2019, 5, 15), 5),
-                new AvailableDate(26, "MAY1B", new DateTime(2019, 5, 16), new DateTime(2019, 5, 20), 5),
-                new AvailableDate(27, "MAY2A", new DateTime(2019, 5, 21), new DateTime(2019, 5, 25), 5),
-                new AvailableDate(28, "MAY2B", new DateTime(2019, 5, 26), new DateTime(2019, 5, 30), 5),
+                new AvailableDate(23, "MAY0A", new DateTime(2019, 5, 1), new DateTime(2019, 5, 5), 0),
+                new AvailableDate(24, "MAY0B", new DateTime(2019, 5, 6), new DateTime(2019, 5, 10), 0),
+                new AvailableDate(25, "MAY1A", new DateTime(2019, 5, 11), new DateTime(2019, 5, 15), 0),
+                new AvailableDate(26, "MAY1B", new DateTime(2019, 5, 16), new DateTime(2019, 5, 20), 0),
+                new AvailableDate(27, "MAY2A", new DateTime(2019, 5, 21), new DateTime(2019, 5, 25), 0),
+                new AvailableDate(28, "MAY2B", new DateTime(2019, 5, 26), new DateTime(2019, 5, 30), 0),
 
                 new AvailableDate(29, "5daynil", new DateTime(2019, 1, 1), new DateTime(2019, 1, 5), 0),
 
                 //JAN10DAY
-                new AvailableDate(30, "JAN0", new DateTime(2019, 1, 1), new DateTime(2019, 1, 10), 2),
-                new AvailableDate(31, "JAN1", new DateTime(2019, 1, 11), new DateTime(2019, 1, 20), 2),
-                new AvailableDate(32, "JAN2", new DateTime(2019, 1, 21), new DateTime(2019, 1, 30), 2),
+                new AvailableDate(30, "JAN0", new DateTime(2019, 1, 1), new DateTime(2019, 1, 10), 10),
+                new AvailableDate(31, "JAN1", new DateTime(2019, 1, 11), new DateTime(2019, 1, 20), 10),
+                new AvailableDate(32, "JAN2", new DateTime(2019, 1, 21), new DateTime(2019, 1, 30), 10),
                 //FEB10DAY
-                new AvailableDate(33, "FEB0", new DateTime(2019, 2, 1), new DateTime(2019, 2, 10), 2),
-                new AvailableDate(34, "FEB1", new DateTime(2019, 2, 11), new DateTime(2019, 2, 20), 2),
+                new AvailableDate(33, "FEB0", new DateTime(2019, 2, 1), new DateTime(2019, 2, 10), 0),
+                new AvailableDate(34, "FEB1", new DateTime(2019, 2, 11), new DateTime(2019, 2, 20), 0),
                 //MAR10DAY
-                new AvailableDate(35, "MAR0", new DateTime(2019, 3, 1), new DateTime(2019, 3, 10), 2),
-                new AvailableDate(36, "MAR1", new DateTime(2019, 3, 11), new DateTime(2019, 3, 20), 2),
-                new AvailableDate(37, "MAR2", new DateTime(2019, 3, 21), new DateTime(2019, 3, 30), 2),
+                new AvailableDate(35, "MAR0", new DateTime(2019, 3, 1), new DateTime(2019, 3, 10), 0),
+                new AvailableDate(36, "MAR1", new DateTime(2019, 3, 11), new DateTime(2019, 3, 20), 0),
+                new AvailableDate(37, "MAR2", new DateTime(2019, 3, 21), new DateTime(2019, 3, 30), 0),
                 //APR10DAY
-                new AvailableDate(38, "APR0", new DateTime(2019, 4, 1), new DateTime(2019, 4, 10), 2),
-                new AvailableDate(39, "APR1", new DateTime(2019, 4, 11), new DateTime(2019, 4, 20), 2),
-                new AvailableDate(40, "APR2", new DateTime(2019, 4, 21), new DateTime(2019, 4, 30), 2),
+                new AvailableDate(38, "APR0", new DateTime(2019, 4, 1), new DateTime(2019, 4, 10), 0),
+                new AvailableDate(39, "APR1", new DateTime(2019, 4, 11), new DateTime(2019, 4, 20), 0),
+                new AvailableDate(40, "APR2", new DateTime(2019, 4, 21), new DateTime(2019, 4, 30), 0),
                 //MAY10DAY
-                new AvailableDate(41, "MAY0", new DateTime(2019, 5, 1), new DateTime(2019, 5, 10), 2),
-                new AvailableDate(42, "MAY1", new DateTime(2019, 5, 11), new DateTime(2019, 5, 20), 2),
-                new AvailableDate(43, "MAY2", new DateTime(2019, 5, 21), new DateTime(2019, 5, 30), 2),
+                new AvailableDate(41, "MAY0", new DateTime(2019, 5, 1), new DateTime(2019, 5, 10), 0),
+                new AvailableDate(42, "MAY1", new DateTime(2019, 5, 11), new DateTime(2019, 5, 20), 0),
+                new AvailableDate(43, "MAY2", new DateTime(2019, 5, 21), new DateTime(2019, 5, 30), 0),
 
                 new AvailableDate(44, "10daynil", new DateTime(2019, 1, 1), new DateTime(2019, 1, 10), 0)
             };
@@ -178,6 +178,7 @@ namespace CSP_LeavePlanner
             season.Init();
             //season.SeasonInfo();
             season.Solve();
+            //season.BinarySearchSolve();
 
             Console.ReadLine();
         }

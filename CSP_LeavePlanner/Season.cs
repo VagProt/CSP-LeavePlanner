@@ -7,13 +7,20 @@ namespace CSP_LeavePlanner
 {
     class Season
     {
+
         private List<Employee> Employees { set; get; }
         private Dictionary<bool, List<AvailableDate>> Leaves { set; get; } //Leaves[true] holds 5day leaves, Leaves[false] holds 10day leaves
         private List<AvailableDate> AllLeaves { set; get; } //Holds all leave dates 5day ones first followed by 10day ones
+
         private TimeSpan ConflictPeriod;
+
         private bool[,] ConflictAll;
         private bool[,] Conflict5day;
         private bool[,] Conflict10day;
+
+        private List<int> AllLbs;
+        private List<int> AllUbs;
+
 
         public Season()
         {
@@ -25,7 +32,11 @@ namespace CSP_LeavePlanner
             ConflictAll = null;
             Conflict5day = null;
             Conflict10day = null;
+            AllLbs = null;
+            AllUbs = null;
         }
+
+        private static TimeSpan ts30days = new TimeSpan(days: 30, hours: 0, minutes: 0, seconds: 0);
 
         public void AddEmployee(Employee emp) //Add Employee to Season object
         {
@@ -74,7 +85,7 @@ namespace CSP_LeavePlanner
             AllLeaves.AddRange(Leaves[true]);
             AllLeaves.AddRange(Leaves[false]);
 
-            ConflictPeriod = new TimeSpan(3 * 240, 0, 0);
+            ConflictPeriod = ts30days;
 
             Employees.ForEach(e => e.TryAddChoice(Leaves));
 
@@ -85,9 +96,63 @@ namespace CSP_LeavePlanner
             Conflict10day = AvailableDate.CreateRelationTable(Leaves[false], ConflictPeriod);
 
             CalculateAndAdjustNeeds();
+
+            //Lb means lower bound which is the smallest allowed value of a variable
+            //Ub means upper bound which is the largest allowed value of a variable
+            AllLbs = new List<int>();
+            AllUbs = new List<int>();
+
+            foreach (var e in Employees)
+                CalcLUBBasedOnLeaveMode(e, AllLeaves, AllLbs, AllUbs); //Calculates bounds of each employee's variables depending on its type
         }
 
-        public void Solve()
+        public void BinarySearchSolve() //To use for finding an optimal minimum number of "holes" if the model is infeasible (not yet operational)
+        {
+            int fstl = Leaves[true].Last().availability, fstr = 100, sndl = Leaves[false].Last().availability, sndr = 100, counter = 0;
+
+            Leaves[false].Last().availability = 100;
+
+            while (fstl < fstr)
+            {
+                Console.WriteLine("Try Counter: " + counter.ToString());
+
+                int mid = (fstl + fstr) / 2;
+
+                Leaves[true].Last().availability = mid;
+                CpSolverStatus status = Solve();
+                if ((status == CpSolverStatus.Infeasible) || (status == CpSolverStatus.Unknown))
+                    fstl = mid + 1;
+                else
+                    fstr = mid;
+
+                counter++;
+            }
+
+            Leaves[true].Last().availability = 100;
+
+            while (sndl < sndr)
+            {
+                Console.WriteLine("Try Counter: " + counter.ToString());
+
+                int mid = (sndl + sndr) / 2;
+
+                Leaves[false].Last().availability = mid;
+                CpSolverStatus status = Solve();
+                if ((status == CpSolverStatus.Infeasible) || (status == CpSolverStatus.Unknown))
+                    sndl = mid + 1;
+                else
+                    sndr = mid;
+
+                counter++;
+            }
+
+            Leaves[true].Last().availability = fstl;
+            Leaves[false].Last().availability = sndl;
+            Console.WriteLine(Leaves[true].Last().availability);
+            Console.WriteLine(Leaves[false].Last().availability);
+        }
+
+        public CpSolverStatus Solve()
         {
             //data.ForEach(d => d.Print());
             //Array.ForEach(employees, e => e.Print());
@@ -105,14 +170,7 @@ namespace CSP_LeavePlanner
             Dictionary<int, List<IntVar>> Variables = new Dictionary<int, List<IntVar>>();
             List<IntVar> AllVariables = new List<IntVar>();
 
-            //Lb means lower bound which is the smallest allowed value of a variable
-            //Ub means upper bound which is the largest allowed value of a variable
-            List<int> AllLbs = new List<int>();
-            List<int> AllUbs = new List<int>();
-
             Employees.ForEach(e => {
-                CalcLUBBasedOnLeaveMode(e, AllLeaves, AllLbs, AllUbs); //Calculates bounds of each employee's variables depending on its type
-
                 List<IntVar> vars = new List<IntVar>();
                 for (int i = 0; i < e.NumDesiredDates; i++)
                 {
@@ -182,6 +240,8 @@ namespace CSP_LeavePlanner
 
             CpSolver solver = new CpSolver();
 
+            //solver.StringParameters = "max_time_in_seconds:5.0";
+
             //VarArraySolutionPrinter cb = new VarArraySolutionPrinter(AllVariables.ToArray());
             //solver.SearchAllSolutions(model, cb);
             //solver.SolveWithSolutionCallback(model, cb);
@@ -225,14 +285,18 @@ namespace CSP_LeavePlanner
 
                 if (!PostSolveConflictCheck())
                     Console.WriteLine("Solution has conflicts!");
+
+                //Console.WriteLine("Model is feasible!");
             }
             else if (status == CpSolverStatus.Infeasible)
-            {
                 Console.WriteLine("Model is infeasible!");
-            }
+            else if (status == CpSolverStatus.Unknown)
+                Console.WriteLine("Solver timed out!");
+
+            return status;
         }
 
-        private void AddConflictConstraints(CpModel model, Employee e, IntVar[] vars, int counter)
+        private void AddConflictConstraints(CpModel model, Employee e, IntVar[] vars, int counter) //Conflict Constraints depend on employee type
         {
             bool[,] ConflictArray = null;
             int offset = -1;
@@ -286,7 +350,7 @@ namespace CSP_LeavePlanner
             }
         }
 
-        public bool PostSolveConflictCheck()
+        public bool PostSolveConflictCheck() //Check if assigned leaves match the required constraints
         {
             foreach (var emp in Employees)
             {
@@ -348,12 +412,31 @@ namespace CSP_LeavePlanner
             }
             else if (e.LeaveType == Employee.LeaveMode.Days10_5)
             {
-                e.Lb[0] = Leaves[true].Count;
-                e.Ub[0] = allLeaves.Count - 1;
-                allLbs.Add(Leaves[true].Count);
-                allUbs.Add(allLeaves.Count - 1);
+                bool isFiveDays = false;
+                if (e.SetDates.Any())
+                    isFiveDays = (e.SetDates.First().end - e.SetDates.First().start).Days == 4;
 
-                for (int i = 1; i < e.NumDesiredDates; i++)
+                if (!isFiveDays)
+                {
+                    e.Lb[0] = Leaves[true].Count;
+                    e.Ub[0] = allLeaves.Count - 1;
+                    allLbs.Add(Leaves[true].Count);
+                    allUbs.Add(allLeaves.Count - 1);
+                }
+                else
+                {
+                    e.Lb[0] = 0;
+                    e.Ub[0] = Leaves[true].Count - 1;
+                    allLbs.Add(0);
+                    allUbs.Add(Leaves[true].Count - 1);
+
+                    e.Lb[1] = Leaves[true].Count;
+                    e.Ub[1] = allLeaves.Count - 1;
+                    allLbs.Add(Leaves[true].Count);
+                    allUbs.Add(allLeaves.Count - 1);
+                }
+
+                for (int i = (isFiveDays ? 2 : 1); i < e.NumDesiredDates; i++)
                 {
                     e.Lb[i] = 0;
                     e.Ub[i] = Leaves[true].Count - 1;
@@ -363,7 +446,7 @@ namespace CSP_LeavePlanner
             }
         }
 
-        private void CalculateAndAdjustNeeds()
+        private void CalculateAndAdjustNeeds() //Add "empty" slots to the model if availability < need. There are two different empty slots, 5day and 10day empty slot.
         {
             int available5 = 0, needed5 = 0, available10 = 0, needed10 = 0;
 
@@ -384,9 +467,9 @@ namespace CSP_LeavePlanner
             }
 
             if (available5 < needed5)
-                Leaves[true].Last().availability = needed5 - available5;
+                Leaves[true].Last().availability = needed5 - available5; //Last element in Leaves[true] is the 5 day empty slot
             if (available10 < needed10)
-                Leaves[false].Last().availability = needed10 - available10;
+                Leaves[false].Last().availability = needed10 - available10; //Last element in Leaves[false] is the 10 day empty slot
         }
     }
 

@@ -109,7 +109,7 @@ class Employee
         else if (InitialChoice != null && LeaveType == LeaveMode.Days10)
             date = AvailableDate.GetDateByName(dates[false], InitialChoice);
         else if (InitialChoice != null && LeaveType == LeaveMode.Days10_5)
-            date = AvailableDate.GetDateByName(dates[false], InitialChoice);
+            date = (InitialChoice.Length == 4 ? AvailableDate.GetDateByName(dates[false], InitialChoice) : AvailableDate.GetDateByName(dates[true], InitialChoice));
         else
             return true;
 
