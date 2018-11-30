@@ -87,7 +87,7 @@ namespace CSP_LeavePlanner
 
             ConflictPeriod = ts30days;
 
-            Employees.ForEach(e => e.TryAddChoice(Leaves));
+            AddInitialEmployeeChoices();
 
             //Three type of conflict arrays
             //Between 5day leaves, 10day leaves and combined
@@ -95,7 +95,7 @@ namespace CSP_LeavePlanner
             Conflict5day = AvailableDate.CreateRelationTable(Leaves[true], ConflictPeriod);
             Conflict10day = AvailableDate.CreateRelationTable(Leaves[false], ConflictPeriod);
 
-            CalculateAndAdjustNeeds();
+            //CalculateAndAdjustNeeds();
 
             //Lb means lower bound which is the smallest allowed value of a variable
             //Ub means upper bound which is the largest allowed value of a variable
@@ -106,11 +106,40 @@ namespace CSP_LeavePlanner
                 CalcLUBBasedOnLeaveMode(e, AllLeaves, AllLbs, AllUbs); //Calculates bounds of each employee's variables depending on its type
         }
 
-        public void BinarySearchSolve() //To use for finding an optimal minimum number of "holes" if the model is infeasible (not yet operational)
+        private void AddInitialEmployeeChoices()
         {
-            int fstl = Leaves[true].Last().availability, fstr = 100, sndl = Leaves[false].Last().availability, sndr = 100, counter = 0;
+            Dictionary<String, int> frequency = new Dictionary<string, int>();
+            AvailableDate choice;
+            Employees.ForEach(e => {
+                if (e.InitialChoice != null)
+                {
+                    if (frequency.ContainsKey(e.InitialChoice))
+                    {
+                        if (frequency[e.InitialChoice] < (choice = AvailableDate.GetDateByName(AllLeaves, e.InitialChoice)).availability)
+                        {
+                            if (e.TryAddChoice(choice))
+                                frequency[e.InitialChoice]++;
+                        }
+                    }
+                    else
+                    {
+                        frequency[e.InitialChoice] = 0;
+                        if (frequency[e.InitialChoice] < (choice = AvailableDate.GetDateByName(AllLeaves, e.InitialChoice)).availability)
+                        {
+                            if (e.TryAddChoice(choice))
+                                frequency[e.InitialChoice]++;
+                        }
+                    }
+                }
+            });
+        }
 
-            Leaves[false].Last().availability = 100;
+        /*public void BinarySearchSolve() //To use for finding an optimal minimum number of "holes" if the model is infeasible (not yet operational)
+        {
+            int fstl = Leaves[true].Last().availability, fstr = fstl+Employees.Count,
+                sndl = Leaves[false].Last().availability, sndr = sndl+Employees.Count, counter = 0;
+
+            Leaves[false].Last().availability = 1000;
 
             while (fstl < fstr)
             {
@@ -128,7 +157,7 @@ namespace CSP_LeavePlanner
                 counter++;
             }
 
-            Leaves[true].Last().availability = 100;
+            Leaves[true].Last().availability = 1000;
 
             while (sndl < sndr)
             {
@@ -150,21 +179,10 @@ namespace CSP_LeavePlanner
             Leaves[false].Last().availability = sndl;
             Console.WriteLine(Leaves[true].Last().availability);
             Console.WriteLine(Leaves[false].Last().availability);
-        }
+        }*/
 
         public CpSolverStatus Solve()
         {
-            //data.ForEach(d => d.Print());
-            //Array.ForEach(employees, e => e.Print());
-            //Console.ReadLine();
-
-            /*for (int i = 0; i < Conflict10day.GetLength(0); i++)
-            {
-                for (int j = 0; j < Conflict10day.GetLength(1); j++)
-                    Console.Write(String.Format("{0} ", Conflict10day[i, j]));
-                Console.WriteLine();
-            }*/
-
             CpModel model = new CpModel();
 
             Dictionary<int, List<IntVar>> Variables = new Dictionary<int, List<IntVar>>();
@@ -186,6 +204,7 @@ namespace CSP_LeavePlanner
             //Console.WriteLine(AllVariables.Count);
             //Console.ReadLine();
 
+            List<IntVar> NilAppears = new List<IntVar>();
             for (int i = 0; i < AllLeaves.Count; i++) //Constrains each value to a maximum sum equal to the availability of the respective leave
             {
                 List<IntVar> ValAppears = new List<IntVar>();
@@ -201,10 +220,14 @@ namespace CSP_LeavePlanner
                     model.Add(AllVariables[j] != i).OnlyEnforceIf(tmp.Not());
                 }
 
-                model.AddSumConstraint(ValAppears, 0, AllLeaves.ElementAt(i).availability);
+
+                if (i != Leaves[true].Count-1 && i != AllLeaves.Count-1)
+                    model.AddSumConstraint(ValAppears, 0, AllLeaves.ElementAt(i).availability);
+                else
+                    NilAppears.AddRange(ValAppears);
             }
 
-            //model.AddAllDifferent(AllVariables.ToArray());
+            model.Minimize(NilAppears.ToArray().Sum());
 
             int counter = 0;
             //IntVar[] prev_vars = null;
@@ -228,19 +251,16 @@ namespace CSP_LeavePlanner
                 //prev_vars = vars;
             });
 
-            //var sumTerm = new SumTermBuilder(AllVariables.Count);
-            //AllVariables.ForEach(v => sumTerm.Add(v));
-            //model.AddGoal("Goal", GoalKind.Minimize, Model.Sum(sumTerm.ToTerm()));
-
             //model.Minimize(AllVariables.ToArray().Sum());
 
             //Strategy of search
-            model.AddDecisionStrategy(AllVariables, DecisionStrategyProto.Types.VariableSelectionStrategy.ChooseMinDomainSize,
-                                                    DecisionStrategyProto.Types.DomainReductionStrategy.SelectMinValue);
+            /*model.AddDecisionStrategy(AllVariables, DecisionStrategyProto.Types.VariableSelectionStrategy.ChooseMinDomainSize,
+                                                    DecisionStrategyProto.Types.DomainReductionStrategy.SelectMinValue);*/
 
-            CpSolver solver = new CpSolver();
-
-            //solver.StringParameters = "max_time_in_seconds:5.0";
+            CpSolver solver = new CpSolver
+            {
+                StringParameters = "max_time_in_seconds:20.0"
+            };
 
             //VarArraySolutionPrinter cb = new VarArraySolutionPrinter(AllVariables.ToArray());
             //solver.SearchAllSolutions(model, cb);
@@ -250,9 +270,10 @@ namespace CSP_LeavePlanner
             //Console.WriteLine(String.Format("Optimal objective value: {0}", cb.ObjectiveValue()));
             //Console.WriteLine(String.Format("Number of solutions found: {0}", cb.SolutionCount()));
 
-            if (status == CpSolverStatus.Feasible)
+            if (status == CpSolverStatus.Optimal || status == CpSolverStatus.Feasible)
             {
-                Employees.ForEach(e => {
+                Employees.ForEach(e =>
+                {
                     int i = 0;
                     foreach (var val in Variables[e.Id]) //updates Season with the results of the solver
                     {
@@ -292,6 +313,8 @@ namespace CSP_LeavePlanner
                 Console.WriteLine("Model is infeasible!");
             else if (status == CpSolverStatus.Unknown)
                 Console.WriteLine("Solver timed out!");
+            else if (status == CpSolverStatus.ModelInvalid)
+                Console.WriteLine("Model Invalid?");
 
             return status;
         }

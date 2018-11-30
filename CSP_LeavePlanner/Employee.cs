@@ -88,7 +88,7 @@ class Employee
         if ((((LeaveType == LeaveMode.Days5 || LeaveType == LeaveMode.Days5_5 || LeaveType == LeaveMode.Days5_5_5) && isFiveDays) ||
             (LeaveType == LeaveMode.Days10 && !isFiveDays) ||
             (LeaveType == LeaveMode.Days10_5))
-            && date.availability > 0)
+            && (date.availability > 0 || date.name == "5daynil" || date.name == "10daynil"))
         {
             date.availability--;
             SetDates.Add(date);
@@ -101,22 +101,17 @@ class Employee
         return false;
     }
 
-    public bool TryAddChoice(Dictionary<bool, List<AvailableDate>> dates)//Adds initial choice of each employee before solving
+    public bool TryAddChoice(AvailableDate date) //Adds initial choice of each employee before solving
     {
-        AvailableDate date = null;
-        if (InitialChoice != null && (LeaveType == LeaveMode.Days5 || LeaveType == LeaveMode.Days5_5 || LeaveType == LeaveMode.Days5_5_5))
-            date = AvailableDate.GetDateByName(dates[true], InitialChoice);
-        else if (InitialChoice != null && LeaveType == LeaveMode.Days10)
-            date = AvailableDate.GetDateByName(dates[false], InitialChoice);
-        else if (InitialChoice != null && LeaveType == LeaveMode.Days10_5)
-            date = (InitialChoice.Length == 4 ? AvailableDate.GetDateByName(dates[false], InitialChoice) : AvailableDate.GetDateByName(dates[true], InitialChoice));
-        else
-            return true;
+        if ((LeaveType == LeaveMode.Days5 || LeaveType == LeaveMode.Days5_5 || LeaveType == LeaveMode.Days5_5_5) && ((date.end - date.start).Days != 4))
+            return false;
 
-        if (date != null && date.availability > 0)
+        if (LeaveType == LeaveMode.Days10 && ((date.end - date.start).Days == 4))
+            return false;
+
+        if (date != null)
         {
             SetDates.Add(date);
-
             return true;
         }
 
